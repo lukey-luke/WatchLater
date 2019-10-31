@@ -1,6 +1,9 @@
+import os
 import requests
 import json
+import time
 from urllib.parse import urlencode
+from download_video import download_video
 
 API_KEY = 'AIzaSyBPMZNeesYEU7bRatKXtxUlDOEKzULN78E'
 YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3'
@@ -8,6 +11,7 @@ MAX_TIMEOUT = 60 # give up if we don't get response after a minute
 ACCESS_TOKEN = ''
 
 BASE_VIDEO_URL = 'youtube.com/watch?v='
+
 
 def call_endpoint(endpoint, params_dict={}):
     url_encoded_params = f'?key={API_KEY}'
@@ -56,18 +60,18 @@ playlist_items_dict = {
 }
 playlist_videos_resp = call_endpoint('playlistItems', playlist_items_dict)
 print(playlist_videos_resp)
-print('type(playlist_videos_resp)')
-print(type(playlist_videos_resp))
 
-videos = []
+video_ids = []
 playlist_vids_dict = json.loads(playlist_videos_resp)
 for video_dict in playlist_vids_dict["items"]:
     video_id = video_dict["contentDetails"]["videoId"]
-    videos.append(video_id)
+    video_ids.append(video_id)
 
 
+MP3_VIDEO_ENDPOINT_1 = 'https://ytmp3.cc/'
 print('download these videos:')
-for video in videos:
-    video_url = BASE_VIDEO_URL + video
-    print(f'    url: {video_url}')
+for video_id in video_ids:
+    video_url = 'https://' + BASE_VIDEO_URL + video_id
+    download_video(video_url)
+
 
