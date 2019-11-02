@@ -3,7 +3,7 @@ import requests
 import json
 import time
 from urllib.parse import urlencode
-from download_video import download_video
+from download_video import download_video_as_mp3
 
 API_KEY = 'AIzaSyBPMZNeesYEU7bRatKXtxUlDOEKzULN78E'
 YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3'
@@ -72,6 +72,6 @@ MP3_VIDEO_ENDPOINT_1 = 'https://ytmp3.cc/'
 print('download these videos:')
 for video_id in video_ids:
     video_url = 'https://' + BASE_VIDEO_URL + video_id
-    download_video(video_url)
+    download_video_as_mp3(video_url)
 
 
